@@ -19,8 +19,6 @@ public class ExternalSystemProperties {
     // 외부 시스템 설정값 Map
     private Map<String, SystemDetail> systems = new HashMap<>();
 
-    private SystemDetail defaultConfig = new SystemDetail();
-
     @Getter
     @Setter
     public static class SystemDetail {
