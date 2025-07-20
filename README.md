@@ -6,11 +6,11 @@
 
 - **Java 17**
 - **Spring Boot 3.5.3**
-  - **Spring Web**: RESTful API 구현
-  - **Spring WebFlux**: WebClient를 통한 비동기 HTTP 통신
-  - **Spring Validation**: 데이터 유효성 검증
-- **Lombok**: 코드 간소화
-- **Log4j2**: 로깅 (Logback 대신 사용)
+  - **Spring Web** : RESTful API 구현
+  - **Spring WebFlux** : WebClient를 통한 비동기 HTTP 통신
+  - **Spring Validation** : 데이터 유효성 검증
+- **Lombok** : 코드 간소화
+- **Log4j2** : 로깅 (Logback 대신 사용)
 
 
 ## 📁 패키지 구조
