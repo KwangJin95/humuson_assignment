@@ -98,7 +98,7 @@ src/
 ### 1. 프로젝트 빌드 및 실행
 ```bash
 # 프로젝트 클론
-git clone [your-repository-url]
+git clone https://github.com/KwangJin95/humuson_assignment.git
 cd assignment
 
 # 권한 부여 (Linux/Mac)
