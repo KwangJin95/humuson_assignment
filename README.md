@@ -1,55 +1,60 @@
 # 주문 데이터 연동 인터페이스 시스템
 
-휴머스온 채용 과제를 위해 구현한 외부 시스템과의 주문 데이터 연동 인터페이스입니다.
+휴머스온 Tech 과제 전형을 위해 구현한 외부 시스템과의 주문 데이터 연동 인터페이스입니다.
 
 ## 🛠 기술 스택
 
-- **Java 17** (OpenJDK)
+- **Java 17**
 - **Spring Boot 3.5.3**
   - **Spring Web**: RESTful API 구현
   - **Spring WebFlux**: WebClient를 통한 비동기 HTTP 통신
-  - **Spring Validation**: Jakarta Validation 기반 데이터 유효성 검증
-- **Lombok**: 코드 간소화 (Getter, Setter, Builder 등)
-- **Log4j2**: 고성능 로깅 (Logback 대신 사용)
-- **Gradle 8.x**: 빌드 도구
+  - **Spring Validation**: 데이터 유효성 검증
+- **Lombok**: 코드 간소화
+- **Log4j2**: 로깅 (Logback 대신 사용)
 
-## 📁 프로젝트 구조
+## 📁 패키지 구조
 
 ```
 src/
 ├─main/
 │  ├─java/com/humuson/assignment/
-│  │  │  AssignmentApplication.java              # 메인 애플리케이션 & 테스트 실행
+│  │  │  AssignmentApplication.java                 # 메인 애플리케이션 & 테스트 실행
+│  │  │
 │  │  ├─config/
-│  │  │      ExternalSystemProperties.java       # 외부 시스템 설정 관리
-│  │  │      WebClientConfig.java               # HTTP 클라이언트 설정
+│  │  │      ExternalSystemProperties.java          # 외부 시스템 설정 관리
+│  │  │      WebClientConfig.java                   # HTTP 클라이언트 설정
+│  │  │
 │  │  └─domain/order/
 │  │      ├─controller/mock/
-│  │      │      MockExternalOrderController.java # 외부 시스템 Mock API
+│  │      │      MockExternalOrderController.java   # 외부 시스템 Mock API
+│  │      │
 │  │      ├─dto/
-│  │      │      OrderDTO.java                   # 주문 데이터 전송 객체
-│  │      │      OrderStatus.java               # 주문 상태 열거형
+│  │      │      OrderDTO.java                      # 주문 데이터 전송 객체
+│  │      │      OrderStatus.java                   # 주문 상태 열거형
+│  │      │
 │  │      ├─external/
 │  │      │  ├─exception/
-│  │      │  │      OrderSyncException.java     # 연동 예외 클래스
+│  │      │  │      OrderSyncException.java         # 연동 예외 클래스
+│  │      │  │
 │  │      │  └─service/
-│  │      │          ExternalOrderClient.java    # 외부 시스템 통신 인터페이스
-│  │      │          ExternalOrderClientImpl.java # HTTP 통신 구현체
-│  │      │          ExternalOrderService.java   # 외부 연동 비즈니스 로직 인터페이스
-│  │      │          ExternalOrderServiceImpl.java # 외부 연동 비즈니스 로직 구현
+│  │      │          ExternalOrderClient.java       # 외부 시스템 통신 인터페이스
+│  │      │          ExternalOrderClientImpl.java   # HTTP 통신 구현체
+│  │      │          ExternalOrderService.java      # 외부 연동 비즈니스 로직 인터페이스
+│  │      │          ExternalOrderServiceImpl.java  # 외부 연동 비즈니스 로직 구현
+│  │      │
 │  │      ├─repository/
-│  │      │      InMemoryOrderRepository.java    # 메모리 기반 주문 저장소
-│  │      │      OrderRepository.java            # 주문 데이터 접근 인터페이스
+│  │      │      InMemoryOrderRepository.java       # 메모리 기반 주문 저장소
+│  │      │      OrderRepository.java               # 주문 데이터 접근 인터페이스
+│  │      │
 │  │      └─service/
-│  │              OrderService.java               # 주문 비즈니스 로직 인터페이스
-│  │              OrderServiceImpl.java           # 주문 비즈니스 로직 구현
+│  │              OrderService.java                 # 주문 비즈니스 로직 인터페이스
+│  │              OrderServiceImpl.java             # 주문 비즈니스 로직 구현
+│  │
 │  └─resources/
-│      │  application.properties                 # Spring Boot 설정
-│      │  external-system-info.properties       # 외부 시스템 연동 정보
-│      ├─static/                                # 정적 리소스
-│      └─templates/                             # 템플릿 파일
+│         application.properties                    # Spring Boot 설정
+│         external-system-info.properties           # 외부 시스템 연동 정보
 └─test/java/com/humuson/assignment/
-        AssignmentApplicationTests.java          # Spring Boot 테스트
+        AssignmentApplicationTests.java             # Spring Boot 테스트
 ```
 
 ## 🏗 시스템 아키텍처
@@ -187,7 +192,7 @@ Mock API에서 제공하는 테스트 데이터:
   },
   {
     "orderId": "9999",
-    "customerName": "",  // 유효성 검증 실패 케이스
+    "customerName": "",  // 유효성 검증 실패 케이스 (@NotBlank)
     "orderDate": "2024-01-16T12:00:00",
     "orderStatus": "PENDING"
   }
@@ -246,4 +251,3 @@ external.systems.newSystem.send-path=/api/orders
 [미존재 연동 실패] - [시스템 설정 정보 없음] - system : invalidSystem
 ```
 
-이 시스템은 요구사항을 충실히 반영하여 **확장성**, **안정성**, **유지보수성**을 고려한 설계로 구현되었습니다.
