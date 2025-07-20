@@ -17,45 +17,45 @@
 
 ```
 src/
-├─main/
-│  ├─java/com/humuson/assignment/
-│  │  │  AssignmentApplication.java                 # 메인 애플리케이션 & 테스트 실행
-│  │  │
-│  │  ├─config/
-│  │  │      ExternalSystemProperties.java          # 외부 시스템 설정 관리
-│  │  │      WebClientConfig.java                   # HTTP 클라이언트 설정
-│  │  │
-│  │  └─domain/order/
-│  │      ├─controller/mock/
-│  │      │      MockExternalOrderController.java   # 외부 시스템 Mock API
-│  │      │
-│  │      ├─dto/
-│  │      │      OrderDTO.java                      # 주문 데이터 전송 객체
-│  │      │      OrderStatus.java                   # 주문 상태 열거형
-│  │      │
-│  │      ├─external/
-│  │      │  ├─exception/
-│  │      │  │      OrderSyncException.java         # 연동 예외 클래스
-│  │      │  │
-│  │      │  └─service/
-│  │      │          ExternalOrderClient.java       # 외부 시스템 통신 인터페이스
-│  │      │          ExternalOrderClientImpl.java   # HTTP 통신 구현체
-│  │      │          ExternalOrderService.java      # 외부 연동 비즈니스 로직 인터페이스
-│  │      │          ExternalOrderServiceImpl.java  # 외부 연동 비즈니스 로직 구현
-│  │      │
-│  │      ├─repository/
-│  │      │      InMemoryOrderRepository.java       # 메모리 기반 주문 저장소
-│  │      │      OrderRepository.java               # 주문 데이터 접근 인터페이스
-│  │      │
-│  │      └─service/
-│  │              OrderService.java                 # 주문 비즈니스 로직 인터페이스
-│  │              OrderServiceImpl.java             # 주문 비즈니스 로직 구현
-│  │
-│  └─resources/
-│         application.properties                    # Spring Boot 설정
-│         external-system-info.properties           # 외부 시스템 연동 정보
-└─test/java/com/humuson/assignment/
-        AssignmentApplicationTests.java             # Spring Boot 테스트
+└─main/
+   ├─java/com/humuson/assignment/
+   │  │  AssignmentApplication.java                 # 메인 애플리케이션 & 테스트 실행
+   │  │
+   │  ├─config/
+   │  │      ExternalSystemProperties.java          # 외부 시스템 설정 관리
+   │  │      WebClientConfig.java                   # HTTP 클라이언트 설정
+   │  │
+   │  └─domain/order/
+   │      ├─controller/mock/
+   │      │      MockExternalOrderController.java   # 외부 시스템 Mock API
+   │      │
+   │      ├─dto/
+   │      │      OrderDTO.java                      # 주문 데이터 전송 객체
+   │      │      OrderStatus.java                   # 주문 상태 열거형
+   │      │
+   │      ├─external/
+   │      │  ├─exception/
+   │      │  │      OrderSyncException.java         # 연동 예외 클래스
+   │      │  │
+   │      │  └─service/
+   │      │          ExternalOrderClient.java       # 외부 시스템 통신 인터페이스
+   │      │          ExternalOrderClientImpl.java   # HTTP 통신 구현체
+   │      │
+   │      │          ExternalOrderService.java      # 외부 연동 비즈니스 로직 인터페이스
+   │      │          ExternalOrderServiceImpl.java  # 외부 연동 비즈니스 로직 구현
+   │      │
+   │      ├─repository/
+   │      │      OrderRepository.java               # 주문 데이터 접근 인터페이스
+   │      │      InMemoryOrderRepository.java       # 메모리 기반 주문 저장소
+   │      │
+   │      └─service/
+   │              OrderService.java                 # 주문 비즈니스 로직 인터페이스
+   │              OrderServiceImpl.java             # 주문 비즈니스 로직 구현
+   │
+   └─resources/
+          application.properties                    # Spring Boot 설정
+          external-system-info.properties           # 외부 시스템 연동 정보
+
 ```
 
 
