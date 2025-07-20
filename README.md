@@ -241,22 +241,22 @@ external.systems.newSystem.send-path=/api/orders
 ## 📝 실행 결과 예시
 
 ```
-2025-07-20T20:12:52.897+09:00  INFO 17284 --- [assignment] [nio-9000-exec-1] .h.a.d.o.c.m.MockExternalOrderController : -------------------------------------------------------------------------------------------------
-2025-07-20T20:12:52.899+09:00  INFO 17284 --- [assignment] [nio-9000-exec-1] .h.a.d.o.c.m.MockExternalOrderController : [Mock API][주문 요청] - count : 4
-2025-07-20T20:12:53.000+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 요청 성공] - count : 4 / url : http://localhost:9000/api/mock-external/orders
-2025-07-20T20:12:53.000+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [외부][주문 요청 성공] - system : systemLocal / count : 4
-2025-07-20T20:12:53.047+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [내부][주문 저장 실패] - system : systemLocal / orderId : 9999 / error : [외부][유효하지 않은 주문 정보][field : customerName -> 공백일 수 없습니다]
-2025-07-20T20:12:53.047+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [내부][주문 저장 완료] - success : 3/4
-2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : -------------------------------------------------------------------------------------------------
-2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : [Mock API][주문 반환] - count : 3
-2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1001, customerName=김민수, orderDate=2025-07-19T20:12:52, orderStatus=PENDING)
-2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1002, customerName=이영호, orderDate=2025-07-18T20:12:52, orderStatus=SHIPPING)
-2025-07-20T20:12:53.070+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1003, customerName=장경철, orderDate=2025-07-20T20:12:52, orderStatus=COMPLETED)
-2025-07-20T20:12:53.071+09:00  INFO 17284 --- [assignment] [ctor-http-nio-2] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 반환 성공] - code : 200
-2025-07-20T20:12:53.075+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 반환 성공] - count: 3 / url : http://localhost:9000/api/mock-external/orders
-2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
-2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [외부][주문 요청 실패] - system : systemA / url : https://not.exist.abc/api/orders / error : [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
-2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.AssignmentApplication              : [systemA 연동 실패] - [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
-2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.AssignmentApplication              : [미존재 연동 실패] - [시스템 설정 정보 없음] - system : invalidSystem
+---------------------------------------------------------------------------------------------------------------------------------------------------
+[Mock API][주문 요청] - count : 4
+[연동][주문 요청 성공] - count : 4 / url : http://localhost:9000/api/mock-external/orders
+[외부][주문 요청 성공] - system : systemLocal / count : 4
+[내부][주문 저장 실패] - system : systemLocal / orderId : 9999 / error : [외부][유효하지 않은 주문 정보][field : customerName -> 공백일 수 없습니다]
+[내부][주문 저장 완료] - success : 3/4
+---------------------------------------------------------------------------------------------------------------------------------------------------
+[Mock API][주문 반환] - count : 3
+OrderDTO(orderId=1001, customerName=김민수, orderDate=2025-07-19T20:12:52, orderStatus=PENDING)
+OrderDTO(orderId=1002, customerName=이영호, orderDate=2025-07-18T20:12:52, orderStatus=SHIPPING)
+OrderDTO(orderId=1003, customerName=장경철, orderDate=2025-07-20T20:12:52, orderStatus=COMPLETED)
+[연동][주문 반환 성공] - code : 200
+[연동][주문 반환 성공] - count: 3 / url : http://localhost:9000/api/mock-external/orders
+[연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+[외부][주문 요청 실패] - system : systemA / url : https://not.exist.abc/api/orders / error : [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+[systemA 연동 실패] - [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+[미존재 연동 실패] - [시스템 설정 정보 없음] - system : invalidSystem
 ```
 
