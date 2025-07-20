@@ -29,17 +29,17 @@
 <img width="906" height="828" alt="Image" src="https://github.com/user-attachments/assets/5401fbcc-0f50-45ac-ab5f-4faee9191232" />
 
 #### 1. **외부 시스템 연동 계층**
-- `ExternalOrderService`: 외부 시스템과의 연동 비즈니스 로직 담당
-- `ExternalOrderClient`: HTTP 통신을 통한 외부 시스템 연결
-- `ExternalSystemProperties`: 다중 외부 시스템 설정 관리
+- `ExternalOrderService` : 외부 시스템과의 연동 비즈니스 로직 담당
+- `ExternalOrderClient` : HTTP 통신을 통한 외부 시스템 연결
+- `ExternalSystemProperties` : 다중 외부 시스템 설정 관리
 
 #### 2. **내부 시스템 비즈니스 계층**
-- `OrderService`: 주문 관련 비즈니스 로직
-- `OrderRepository`: 데이터 접근 추상화
+- `OrderService` : 주문 관련 비즈니스 로직
+- `OrderRepository` : 데이터 접근 추상화
 
 #### 3. **데이터 계층**
-- `InMemoryOrderRepository`: 메모리 기반 주문 데이터 저장
-- `OrderDTO`: 주문 데이터 전송 객체 (유효성 검증 포함)
+- `InMemoryOrderRepository` : 메모리 기반 주문 데이터 저장
+- `OrderDTO` : 주문 데이터 전송 객체 (유효성 검증 포함)
 
 ### 설계 특징
 
@@ -48,8 +48,8 @@
 - **다중 외부 시스템 지원** : Properties를 통해 여러 외부 시스템 관리
 
 #### 🔒 **안정성 확보**
-- **타임아웃 설정**: 연결/응답 타임아웃 (3초) 설정으로 무한 대기 방지
-- **동시성 안전**: `ConcurrentHashMap` 사용으로 멀티스레드 환경 대응
+- **타임아웃 설정** : 연결/응답 타임아웃 (3초) 설정으로 무한 대기 방지
+- **동시성 안전** : `ConcurrentHashMap` 사용으로 멀티스레드 환경 대응
 
 ---
 
