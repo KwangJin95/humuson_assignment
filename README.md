@@ -149,9 +149,6 @@ external.systems.systemA.send-path=/api/orders
 - 내부 시스템의 주문 데이터를 JSON 형식으로 변환
 - HTTP POST를 통해 외부 시스템으로 전송
 
-### 3. **주문 조회 기능**
-- 외부 시스템별 전체 주문 목록 조회
-- 주문 ID를 통한 개별 주문 조회
 
 ## 🧪 테스트 시나리오
 
@@ -166,9 +163,9 @@ externalOrderService.sendOrdersToExternal("systemLocal");
 
 
 ### ❌ **예외 케이스**
-1. **네트워크 오류**: 존재하지 않는 URL로 연결 시도
-2. **시스템 미존재**: 설정되지 않은 시스템명 사용
-3. **데이터 유효성 오류**: 빈 고객명 등 검증 실패
+1. **네트워크 오류** : 존재하지 않는 URL로 연결 시도
+2. **시스템 미존재** : 설정되지 않은 시스템명 사용
+3. **데이터 유효성 오류** : Bean Validation 검증 실패
 
 ## 📊 샘플 데이터
 
@@ -209,7 +206,7 @@ Mock API에서 제공하는 테스트 데이터:
 ### 1. **네트워크 관련 예외**
 - **연결 타임아웃**: 3초 이내 연결 실패 시 예외 발생
 - **응답 타임아웃**: 3초 이내 응답 없을 시 예외 발생
-- **HTTP 상태 코드**: 2xx 외의 응답에 대한 적절한 예외 처리
+- **HTTP 상태 코드**: 2xx 외의 응답에 대한 예외 처리
 
 ### 2. **데이터 검증 예외**
 - **필수 필드 누락**: `@NotBlank`, `@NotNull` 어노테이션을 통한 검증
@@ -240,21 +237,26 @@ external.systems.newSystem.send-path=/api/orders
 - 확장 가능: gRPC, Message Queue 기반 구현체
 - 클라이언트 인터페이스를 구현한 새로운 구현체 추가
 
-### 4. **인증/보안 강화**
-```java
-// WebClient 설정에 인증 헤더 추가 가능
-.defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-```
-
 
 ## 📝 실행 결과 예시
 
 ```
-[외부][주문 요청 성공] - system : systemLocal / count : 4
-[내부][주문 저장 실패] - system : systemLocal / orderId : 9999 / error : [외부][유효하지 않은 주문 정보][field : customerName -> 공백일 수 없습니다]
-[내부][주문 저장 완료] - success : 3/4
-[연동][주문 반환 성공] - count: 3 / url : http://localhost:9000/api/mock-external/orders
-[systemA 연동 실패] - [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : ...
-[미존재 연동 실패] - [시스템 설정 정보 없음] - system : invalidSystem
+2025-07-20T20:12:52.897+09:00  INFO 17284 --- [assignment] [nio-9000-exec-1] .h.a.d.o.c.m.MockExternalOrderController : -------------------------------------------------------------------------------------------------
+2025-07-20T20:12:52.899+09:00  INFO 17284 --- [assignment] [nio-9000-exec-1] .h.a.d.o.c.m.MockExternalOrderController : [Mock API][주문 요청] - count : 4
+2025-07-20T20:12:53.000+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 요청 성공] - count : 4 / url : http://localhost:9000/api/mock-external/orders
+2025-07-20T20:12:53.000+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [외부][주문 요청 성공] - system : systemLocal / count : 4
+2025-07-20T20:12:53.047+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [내부][주문 저장 실패] - system : systemLocal / orderId : 9999 / error : [외부][유효하지 않은 주문 정보][field : customerName -> 공백일 수 없습니다]
+2025-07-20T20:12:53.047+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [내부][주문 저장 완료] - success : 3/4
+2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : -------------------------------------------------------------------------------------------------
+2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : [Mock API][주문 반환] - count : 3
+2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1001, customerName=김민수, orderDate=2025-07-19T20:12:52, orderStatus=PENDING)
+2025-07-20T20:12:53.069+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1002, customerName=이영호, orderDate=2025-07-18T20:12:52, orderStatus=SHIPPING)
+2025-07-20T20:12:53.070+09:00  INFO 17284 --- [assignment] [nio-9000-exec-2] .h.a.d.o.c.m.MockExternalOrderController : OrderDTO(orderId=1003, customerName=장경철, orderDate=2025-07-20T20:12:52, orderStatus=COMPLETED)
+2025-07-20T20:12:53.071+09:00  INFO 17284 --- [assignment] [ctor-http-nio-2] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 반환 성공] - code : 200
+2025-07-20T20:12:53.075+09:00  INFO 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 반환 성공] - count: 3 / url : http://localhost:9000/api/mock-external/orders
+2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderClientImpl    : [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.d.o.e.s.ExternalOrderServiceImpl   : [외부][주문 요청 실패] - system : systemA / url : https://not.exist.abc/api/orders / error : [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.AssignmentApplication              : [systemA 연동 실패] - [연동][주문 요청 실패] - url : https://not.exist.abc/api/orders / error : Failed to resolve 'not.exist.abc' [A(1)] after 2 queries 
+2025-07-20T20:12:53.756+09:00 ERROR 17284 --- [assignment] [  restartedMain] c.h.a.AssignmentApplication              : [미존재 연동 실패] - [시스템 설정 정보 없음] - system : invalidSystem
 ```
 
