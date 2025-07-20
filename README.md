@@ -30,27 +30,27 @@ src/
    │      │      MockExternalOrderController.java   # 외부 시스템 Mock API
    │      │
    │      ├─dto/
-   │      │      OrderDTO.java                      # 주문 데이터 전송 객체
-   │      │      OrderStatus.java                   # 주문 상태 열거형
+   │      │      OrderDTO.java                      # 주문 DTO
+   │      │      OrderStatus.java                   # 주문 상태 enum
    │      │
    │      ├─external/
    │      │  ├─exception/
-   │      │  │      OrderSyncException.java         # 연동 예외 클래스
+   │      │  │      OrderSyncException.java         # 주문 연동 예외
    │      │  │
    │      │  └─service/
    │      │          ExternalOrderClient.java       # 외부 시스템 통신 인터페이스
    │      │          ExternalOrderClientImpl.java   # HTTP 통신 구현체
    │      │
    │      │          ExternalOrderService.java      # 외부 연동 비즈니스 로직 인터페이스
-   │      │          ExternalOrderServiceImpl.java  # 외부 연동 비즈니스 로직 구현
+   │      │          ExternalOrderServiceImpl.java  # 외부 연동 비즈니스 로직 구현체
    │      │
    │      ├─repository/
    │      │      OrderRepository.java               # 주문 데이터 접근 인터페이스
-   │      │      InMemoryOrderRepository.java       # 메모리 기반 주문 저장소
+   │      │      InMemoryOrderRepository.java       # 메모리 기반 주문 데이터 접근 구현체
    │      │
    │      └─service/
-   │              OrderService.java                 # 주문 비즈니스 로직 인터페이스
-   │              OrderServiceImpl.java             # 주문 비즈니스 로직 구현
+   │             OrderService.java                  # 내부 시스템 주문 비즈니스 로직 인터페이스
+   │             OrderServiceImpl.java              # 내부 시스템 주문 비즈니스 로직 구현
    │
    └─resources/
           application.properties                    # Spring Boot 설정
