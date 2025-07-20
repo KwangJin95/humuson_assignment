@@ -55,7 +55,7 @@
 
 ## 🛠 기술 스택
 
-- **Java 17**
+- **Java 17 (Amazon Corretto 17.0.13)**
 - **Spring Boot 3.5.3**
   - **Spring Web** : RESTful API 구현
   - **Spring WebFlux** : WebClient를 통한 비동기 HTTP 통신
