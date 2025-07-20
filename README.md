@@ -2,6 +2,57 @@
 
 휴머스온 Tech 과제 전형을 위해 구현한 외부 시스템과의 주문 데이터 연동 인터페이스입니다.
 
+---
+
+## 📋 주요 기능
+
+### 1. **주문 데이터 가져오기** (`fetchAndSaveOrders`)
+- 외부 시스템에서 JSON 형식의 주문 데이터를 HTTP GET으로 수신
+- 받은 데이터에 대한 유효성 검증 (`@NotBlank`, `@NotNull` 등)
+- 검증 통과한 주문만 메모리에 저장
+- 주문 ID 기준으로 중복 데이터 업데이트 처리
+
+### 2. **주문 데이터 전송하기** (`sendOrdersToExternal`)
+- 내부 시스템의 주문 데이터를 JSON 형식으로 변환
+- HTTP POST를 통해 외부 시스템으로 전송
+
+### 3. 주문 조회 기능
+- 외부 시스템별 전체 주문 목록 조회
+- 주문 ID를 통한 개별 주문 조회
+
+---
+
+## 🏗 시스템 아키텍처
+
+### 클래스 다이어그램 주요 컴포넌트
+
+<img width="906" height="828" alt="Image" src="https://github.com/user-attachments/assets/5401fbcc-0f50-45ac-ab5f-4faee9191232" />
+
+#### 1. **외부 시스템 연동 계층**
+- `ExternalOrderService`: 외부 시스템과의 연동 비즈니스 로직 담당
+- `ExternalOrderClient`: HTTP 통신을 통한 외부 시스템 연결
+- `ExternalSystemProperties`: 다중 외부 시스템 설정 관리
+
+#### 2. **내부 시스템 비즈니스 계층**
+- `OrderService`: 주문 관련 비즈니스 로직
+- `OrderRepository`: 데이터 접근 추상화
+
+#### 3. **데이터 계층**
+- `InMemoryOrderRepository`: 메모리 기반 주문 데이터 저장
+- `OrderDTO`: 주문 데이터 전송 객체 (유효성 검증 포함)
+
+### 설계 특징
+
+#### ✨ **확장성 고려**
+- **인터페이스 기반 설계** : 모든 주요 컴포넌트가 인터페이스로 추상화되어 구현체 교체 용이
+- **다중 외부 시스템 지원** : Properties를 통해 여러 외부 시스템 관리
+
+#### 🔒 **안정성 확보**
+- **타임아웃 설정**: 연결/응답 타임아웃 (3초) 설정으로 무한 대기 방지
+- **동시성 안전**: `ConcurrentHashMap` 사용으로 멀티스레드 환경 대응
+
+---
+
 ## 🛠 기술 스택
 
 - **Java 17**
@@ -12,6 +63,7 @@
 - **Lombok** : 코드 간소화
 - **Log4j2** : 로깅 (Logback 대신 사용)
 
+---
 
 ## 📁 패키지 구조
 
@@ -55,38 +107,9 @@ src/
    └─resources/
           application.properties                    # Spring Boot 설정
           external-system-info.properties           # 외부 시스템 연동 정보
-
 ```
 
-## 🏗 시스템 아키텍처
-
-### 클래스 다이어그램 주요 컴포넌트
-
-<img width="906" height="828" alt="Image" src="https://github.com/user-attachments/assets/5401fbcc-0f50-45ac-ab5f-4faee9191232" />
-
-#### 1. **외부 시스템 연동 계층**
-- `ExternalOrderService`: 외부 시스템과의 연동 비즈니스 로직 담당
-- `ExternalOrderClient`: HTTP 통신을 통한 외부 시스템 연결
-- `ExternalSystemProperties`: 다중 외부 시스템 설정 관리
-
-#### 2. **내부 시스템 비즈니스 계층**
-- `OrderService`: 주문 관련 비즈니스 로직
-- `OrderRepository`: 데이터 접근 추상화
-
-#### 3. **데이터 계층**
-- `InMemoryOrderRepository`: 메모리 기반 주문 데이터 저장
-- `OrderDTO`: 주문 데이터 전송 객체 (유효성 검증 포함)
-
-### 설계 특징
-
-#### ✨ **확장성 고려**
-- **인터페이스 기반 설계** : 모든 주요 컴포넌트가 인터페이스로 추상화되어 구현체 교체 용이
-- **다중 외부 시스템 지원** : Properties를 통해 여러 외부 시스템 관리
-
-#### 🔒 **안정성 확보**
-- **타임아웃 설정**: 연결/응답 타임아웃 (3초) 설정으로 무한 대기 방지
-- **동시성 안전**: `ConcurrentHashMap` 사용으로 멀티스레드 환경 대응
-
+---
 
 ## 🚀 실행 방법
 
@@ -136,19 +159,7 @@ external.systems.systemA.fetch-path=/api/orders
 external.systems.systemA.send-path=/api/orders
 ```
 
-
-## 📋 주요 기능
-
-### 1. **주문 데이터 가져오기** (`fetchAndSaveOrders`)
-- 외부 시스템에서 JSON 형식의 주문 데이터를 HTTP GET으로 수신
-- 받은 데이터에 대한 유효성 검증 (`@NotBlank`, `@NotNull` 등)
-- 검증 통과한 주문만 메모리에 저장
-- 주문 ID 기준으로 중복 데이터 업데이트 처리
-
-### 2. **주문 데이터 전송하기** (`sendOrdersToExternal`)
-- 내부 시스템의 주문 데이터를 JSON 형식으로 변환
-- HTTP POST를 통해 외부 시스템으로 전송
-
+---
 
 ## 🧪 테스트 시나리오
 
@@ -199,6 +210,7 @@ Mock API에서 제공하는 테스트 데이터:
 ]
 ```
 
+---
 
 ## 🔍 예외 처리 전략
 
@@ -214,6 +226,7 @@ Mock API에서 제공하는 테스트 데이터:
 ### 3. **시스템 설정 예외**
 - **미등록 시스템** : 설정 파일에 없는 시스템명 사용 시 예외 발생
 
+---
 
 ## 🔄 확장 가능성
 
@@ -231,6 +244,7 @@ external.systems.newSystem.send-path=/api/orders
 ### 3. **통신 프로토콜 변경**
 - 클라이언트 인터페이스를 구현한 새로운 구현체 추가
 
+---
 
 ## 📝 실행 결과 예시
 
